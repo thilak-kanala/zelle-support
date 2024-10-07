@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="/styles/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/styles/styles.css" rel="stylesheet">
+    <title>Demo</title>
+</head>
+
+<body>
+
+<header class="bg-primary text-white p-3">
+    <h1>Zelle CSR</h1>
+</header>
+
+<section class="container mt-4">
+
+    <h2>Customer Details</h2>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Customer ID</th>
+            <td th:text="${customerDetails.customer.id}">1</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td th:text="${customerDetails.customer.firstName}">Sample Title</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td th:text="${customerDetails.customer.lastName}">Sample Author</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td th:text="${customerDetails.customer.email}">Sample Author</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h3>
+        Accounts
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#accountsSection"
+                aria-expanded="false" aria-controls="accountsSection">
+            Toggle
+        </button>
+    </h3>
+    <div class="collapse" id="accountsSection">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Account ID</th>
+                <th>Account Number</th>
+                <th>Account Type</th>
+                <th>Account Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="account : ${customerDetails.accounts}">
+                <td th:text="${account.id}">Sample ID</td>
+                <td th:text="${account.accountNumber}">Sample accountNumber</td>
+                <td th:text="${account.accountType}">Sample accountType</td>
+                <td th:text="${account.accountStatus}">Sample accountStatus</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <h3>
+        Tokens
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#tokensSection"
+                aria-expanded="false" aria-controls="tokensSection">
+            Toggle
+        </button>
+    </h3>
+
+    <div class="collapse" id="tokensSection">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Token ID</th>
+                <th>Token Value</th>
+                <th>Token Type</th>
+                <th>Token Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="token : ${customerDetails.tokens}">
+                <td th:text="${token.id}">token id</td>
+                <td th:text="${token.token}">token value</td>
+                <td th:text="${token.tokenType}">token type</td>
+                <td th:text="${token.tokenStatus}">token status</td>
+                <td><a th:href="@{/tokens/details/{id}(id=${token.id})}" class="btn btn-info">View</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <h3>
+        Recipients
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#recipientsSection"
+                aria-expanded="false" aria-controls="recipientsSection">
+            Toggle
+        </button>
+    </h3>
+
+    <div class="collapse" id="recipientsSection">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Recipient EWS Token</th>
+                <th>Recipient Token</th>
+                <th>Recipient Status</th>
+                <th>Recipient Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="recipient : ${customerDetails.recipients}">
+                <td th:text="${recipient.EWSToken}">recipient ews token</td>
+                <td th:text="${recipient.token}">recipient token</td>
+                <td th:text="${recipient.status}">recipient status</td>
+                <td th:text="${recipient.recipientName}">recipient name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add this section to the customer_details.html file -->
+
+    <hr>
+
+    <h3>
+        Payments
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#paymentsSection"
+                aria-expanded="false" aria-controls="paymentsSection">
+            Toggle
+        </button>
+    </h3>
+
+    <div class="collapse" id="paymentsSection">
+        <!-- Table for PAYMENT_SENT -->
+        <h4>Payments Sent</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Dollar Amount</th>
+                <th>Payment Date</th>
+                <th>Payment Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment : ${customerDetails.payments}" th:if="${payment.paymentType == T(com.zelle.zelle_support.Model.PaymentType).PAYMENT_SENT}">
+                <td th:text="${payment.id}">Payment ID</td>
+                <td th:text="${payment.dollarAmount}">Dollar Amount</td>
+                <td th:text="${payment.paymentDate}">Payment Date</td>
+                <td th:text="${payment.paymentStatus}">Payment Status</td>
+                <td><a th:href="@{/payments/details/{id}(id=${payment.id})}" class="btn btn-info">View</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Table for PAYMENT_RECEIVED -->
+        <h4>Payments Received</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Dollar Amount</th>
+                <th>Payment Date</th>
+                <th>Payment Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment : ${customerDetails.payments}" th:if="${payment.paymentType == T(com.zelle.zelle_support.Model.PaymentType).PAYMENT_RECEIVED}">
+                <td th:text="${payment.id}">Payment ID</td>
+                <td th:text="${payment.dollarAmount}">Dollar Amount</td>
+                <td th:text="${payment.paymentDate}">Payment Date</td>
+                <td th:text="${payment.paymentStatus}">Payment Status</td>
+                <td><a th:href="@{/payments/details/{id}(id=${payment.id})}" class="btn btn-info">View</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Table for REQUEST_SENT -->
+        <h4>Requests Sent</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Dollar Amount</th>
+                <th>Payment Date</th>
+                <th>Payment Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment : ${customerDetails.payments}" th:if="${payment.paymentType == T(com.zelle.zelle_support.Model.PaymentType).REQUEST_SENT}">
+                <td th:text="${payment.id}">Payment ID</td>
+                <td th:text="${payment.dollarAmount}">Dollar Amount</td>
+                <td th:text="${payment.paymentDate}">Payment Date</td>
+                <td th:text="${payment.paymentStatus}">Payment Status</td>
+                <td><a th:href="@{/payments/details/{id}(id=${payment.id})}" class="btn btn-info">View</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Table for REQUEST_RECEIVED -->
+        <h4>Requests Received</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Dollar Amount</th>
+                <th>Payment Date</th>
+                <th>Payment Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="payment : ${customerDetails.payments}" th:if="${payment.paymentType == T(com.zelle.zelle_support.Model.PaymentType).REQUEST_RECEIVED}">
+                <td th:text="${payment.id}">Payment ID</td>
+                <td th:text="${payment.dollarAmount}">Dollar Amount</td>
+                <td th:text="${payment.paymentDate}">Payment Date</td>
+                <td th:text="${payment.paymentStatus}">Payment Status</td>
+                <td><a th:href="@{/payments/details/{id}(id=${payment.id})}" class="btn btn-info">View</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

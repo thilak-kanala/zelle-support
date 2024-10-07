@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="/styles/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/styles/styles.css" rel="stylesheet">
+    <title>Demo</title>
+</head>
+<body>
+
+<header class="bg-primary text-white p-3">
+    <h1>Zelle CSR</h1>
+</header>
+
+<section class="container mt-4">
+
+<!--    <a th:href="@{/customers/list}" class="btn btn-primary mb-3">List Customers</a>-->
+<!--    <a th:href="@{/customers/dummyDetails}" class="btn btn-primary mb-3">Customer Details</a>-->
+
+    <h2>Search</h2>
+
+    <hr>
+
+    <div id="customerSearch">
+        <h3>
+            Customer Search
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#customerSearchForm" aria-expanded="false" aria-controls="customerSearchForm">
+                Toggle
+            </button>
+        </h3>
+        <div class="collapse" id="customerSearchForm">
+            <form th:action="@{/customers/search}" method="get">
+                <div class="mb-3">
+                    <label for="customerSearchType" class="form-label">Search By:</label>
+                    <select id="customerSearchType" name="searchType" class="form-select" required>
+                        <option value="id">ID</option>
+                        <option value="firstName">First Name</option>
+                        <option value="lastName">Last Name</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="customerSearchValue" class="form-label">Enter Value:</label>
+                    <input type="text" id="customerSearchValue" name="searchValue" class="form-control" required pattern=".*\S.*"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="tokenSearch">
+        <h3>
+            Token Search
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#tokenSearchForm" aria-expanded="false" aria-controls="tokenSearchForm">
+                Toggle
+            </button>
+        </h3>
+        <div class="collapse" id="tokenSearchForm">
+            <form th:action="@{/tokens/search}" method="get">
+                <div class="mb-3">
+                    <label for="tokenSearchValue" class="form-label">Enter Value:</label>
+                    <input type="text" id="tokenSearchValue" name="searchValue" class="form-control" required pattern=".*\S.*"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="paymentSearch">
+        <h3>
+            Payment Search
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#paymentSearchForm" aria-expanded="false" aria-controls="paymentSearchForm">
+                Toggle
+            </button>
+        </h3>
+        <div class="collapse" id="paymentSearchForm">
+            <form th:action="@{/payments/search}" method="get">
+                <div class="mb-3">
+                    <label for="paymentSearchValue" class="form-label">Enter Value:</label>
+                    <input type="text" id="paymentSearchValue" name="searchValue" class="form-control" required pattern=".*\S.*"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
